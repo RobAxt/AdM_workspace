@@ -101,6 +101,12 @@ int main(void)
     uint32_t c3 = asm_bitfield_clear(a3, 5, 3);
     /* ----------- Ejercicio 3 ----------- */
 
+    /* ----------- Ejercicio 4 ----------- */
+    uint32_t a4 = 947;
+    uint32_t b4 = bitfield_toggle(a4, 6, 2);
+    uint32_t c4 = asm_bitfield_toggle(a4, 6, 2);
+    /* ----------- Ejercicio 4 ----------- */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

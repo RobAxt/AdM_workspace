@@ -29,3 +29,12 @@ uint32_t bitfield_clear(uint32_t dato, uint32_t ancho, uint32_t inicio){
     auxiliar = dato&auxiliar;       // Se aplica operación "and" bit a bit
     return auxiliar;                // Se devuelve resultado
 }
+
+/*Ejercicio 4 */
+uint32_t bitfield_toggle(uint32_t dato, uint32_t ancho, uint32_t inicio){
+    uint32_t auxiliar = 1<<ancho;   // 1<<5  = 0000 0010 0000 (32 en decimal)
+    auxiliar -= 1;                  // 32-1  = 0000 0001 1111
+    auxiliar = auxiliar<<inicio;    // 31<<3 = 0000 1111 1000 (248 en decimal)
+    auxiliar = dato ^ auxiliar;     // Se aplica operación "and" bit a bit
+    return auxiliar;                // Se devuelve resultado
+}
