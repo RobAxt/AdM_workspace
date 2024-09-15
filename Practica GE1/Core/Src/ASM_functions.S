@@ -70,15 +70,15 @@
 		push {r4 - r7}
 
 		// Guarda de seguridad
-		cbz r0, _exit2
-		cbz r1, _exit2
+		cbz  r0, _exit2
+		cbz  r1, _exit2
 	_loop2:
-		sub r2, #1	// longitud = longitud - 1
+		sub  r2, #1	// longitud = longitud - 1
 
-		ldrh  r4, [r0, r2, LSL #1] // r4 =  *(r0 +r2*2)
+		ldrh r4, [r0, r2, LSL #1] // r4 =  *(r0 +r2*2)
 		mul  r4, r4, r3	          // r4 = vectorIn*escalar
 		usat r4, #12, r4          // satura r4 en 12 bits
-		strh  r4, [r1, r2, LSL #1] // *(r1 +r2*2) = r4
+		strh r4, [r1, r2, LSL #1] // *(r1 +r2*2) = r4
 		cbz  r2, _exit2	// Si r2 = 0, la función termina
 		b _loop2		// De lo contrario seguimos iterando
 
@@ -136,7 +136,7 @@
 		lsl r3, r1	// Se desplaza el 1 según el ancho del campo
 		sub r3, #1	// Se genera la máscara. Ej: 001000 - 1 = 000111
 		lsl r3, r2	// Se desplaza la máscara según inicio. Ej: 011100
-		eor r0, r3	// Se aplica and bit a bit. Se devuelve el resultado en r0
+		eor r0, r3	// Se aplica xor bit a bit. Se devuelve el resultado en r0
 
 	_exit4:
 		bx lr
