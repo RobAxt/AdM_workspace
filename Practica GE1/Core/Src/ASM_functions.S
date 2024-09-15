@@ -3,7 +3,7 @@
 /* ##  https://github.com/RobAxt/AdM_workspace/tree/main   ## */
 /* ########################################################## */
 /* ## Grupo:                                               ## */
-/* ##  e2301 Agustin Jesus Vázquez                         ## */
+/* ##  e2301 Agustín Jesús Vazquez                         ## */
 /* ##  e2312 Franco Chiesa Docampo                         ## */
 /* ##  i0616 Roberto Oscar Axt                             ## */
 /* ########################################################## */
