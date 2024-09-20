@@ -9,8 +9,6 @@ void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud) {
 		vectorOut[i-1] = (int16_t)(vectorIn[i-1]>>16);
 	}
 }
-// 0 1 2
-// 7 1 3
 
 /* Ejercicio 2 */
 uint32_t max (int32_t * vectorIn, uint32_t longitud) {

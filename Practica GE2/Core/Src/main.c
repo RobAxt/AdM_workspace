@@ -86,10 +86,14 @@ int main(void)
 	/* ----------- Ejercicio 1 ----------- */
 
 	/* ----------- Ejercicio 2 ----------- */
+
     int32_t vec32_2[] = {7,3,1};
     uint32_t lon32_2 = sizeof(vec32_2)/sizeof(vec32_2[0]);
-    uint32_t rta = max(vec32_2, lon32_2);
-	/* ----------- Ejercicio 2 ----------- */
+
+    uint32_t rta_2 = max(vec32_2, lon32_2);
+	uint32_t asm_rta_2 = asm_max(vec32_2, lon32_2);
+
+    /* ----------- Ejercicio 2 ----------- */
 
 	/* ----------- Ejercicio 3 ----------- */
 	/* ----------- Ejercicio 3 ----------- */

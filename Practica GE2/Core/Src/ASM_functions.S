@@ -14,7 +14,7 @@
 
 /* Exportar funciones*/
 .global asm_pack32to16
-
+.global asm_max
 
 /* Ejercicio 1 */
 // Prototipo en archivo .h:
@@ -48,19 +48,24 @@
 
 /* Ejercicio 2*/
 // Prototipo en archivo .h:
-//
+//uint32_t asm_max (int32_t * vectorIn, uint32_t longitud);
 
 // Parámetros recibidos
-//	r0:
-//	r1:
+//	r0: vectorIn
+//	r1: longitud
+
+// Valor de retorno: uint32_t con el indice del mayor elemento
+.thumb_func
+	asm_max:
+		push {r4 - r7} // Se resguardan los valores de los registros en el stack
+
+		// Guarda de seguridad
+		cbz r0, _exit2	// Salir si vectorIn es una dirección nula
 
 
-// Valor de retorno:
-
-
-
-
-
+	_exit2:
+		pop {r4 - r7} // Se recuperan los valores de los registros
+		bx lr
 
 /* Ejercicio 3*/
 // Prototipo en archivo .h:
