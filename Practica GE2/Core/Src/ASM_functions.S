@@ -35,11 +35,11 @@
 		cbz r1, _exit1	// Guarda de seguridad. Salir si vectorOut es una dirección nula
 
 	_loop1:
-		sub r2, #1	// longitud = longitud - 1
+		sub  r2, #1	// longitud = longitud - 1
 		ldr  r3, [r0, r2, LSL #2] // Se carga desde el último valor hacia el primero
 		lsr  r3, r3, #16       	  // r3 = r3>>16
 		strh r3, [r1, r2, LSL #1] // Se guarda el resultado
-		cbz r2, _exit1	// Si r2 = 0, la función termina
+		cbz  r2, _exit1	// Si r2 = 0, la función termina
 		b _loop1		// De lo contrario seguimos iterando
 
 	_exit1:
@@ -75,8 +75,8 @@
 		b _loop2        // De lo contrario seguimos iterando
 
 	_exit2:
-	    mov r0, r4
-		pop {r4 - r7} // Se recuperan los valores de los registros
+	    mov r0, r4      // se devuelve maxIndice
+		pop {r4 - r7}   // Se recuperan los valores de los registros
 		bx lr
 
 /* Ejercicio 3*/
@@ -92,10 +92,25 @@
 // Valor de retorno: void
 .thumb_func
 	asm_downSample:
-		push {r4 - r7} // Se resguardan los valores de los registros en el stack
-		cbz r0, _exit3	// Guarda de seguridad. Salir si vectorIn es una dirección nula
-		cbz r1, _exit3	// Guarda de seguridad. Salir si vectorOut es una dirección nula
+		push {r4 - r7}   // Se resguardan los valores de los registros en el stack
+		cbz r0, _exit3	 // Guarda de seguridad. Salir si vectorIn es una dirección nula
+		cbz r1, _exit3	 // Guarda de seguridad. Salir si vectorOut es una dirección nula
 
+        udiv r4, r2, r3  // división: r4 = longitud / N
+        sub  r4, r2, r4  // r4 = longitud - longitud / N ---> longitud vectorOut
+
+
+	_loop3:
+        udiv  r6, r2, r3             //  r6 = r2 / r3 (i / N)  |
+        mul   r7, r6, r3             //  r7 = r6 * r3 (r6 * N) |  r2 % r3
+        subs  r7, r2, r7             //  r2 - r7      residuo  |
+		sub   r2, #1	             // longitud = longitud - 1
+		ittt  ne			         // if != 0
+		ldrne r5, [r0, r2, LSL #2]   // Se carga desde el último valor hacia el primero
+		subne r4, #1                 // (!=0) r4 = r4 -1
+		strne r5, [r1, r4, LSL #2]   // (!=0) r1[r4] = r5
+		cbz r2, _exit3	// Si r1 = 0, la función termina
+		b _loop3        // De lo contrario seguimos iterando
 
 	_exit3:
 		pop {r4 - r7} // Se recuperan los valores de los registros
@@ -112,10 +127,10 @@
 .thumb_func
 	asm_invertir:
 		push {r4 - r7} // Se resguardan los valores de los registros en el stack
-		cbz r0, _exit3	// Guarda de seguridad. Salir si vectorIn es una dirección nula
+		cbz r0, _exit4	// Guarda de seguridad. Salir si vectorIn es una dirección nula
 
 
-	_exit3:
+	_exit4:
 		pop {r4 - r7} // Se recuperan los valores de los registros
 		bx lr
 
