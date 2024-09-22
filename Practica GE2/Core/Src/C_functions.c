@@ -37,5 +37,12 @@ void downSample (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uin
 
 /* Ejercicio 4 */
 void invertir (uint16_t * vector, uint32_t longitud) {
+	uint32_t i,j;
+	uint16_t tmp = 0;
 
+    for (i=0,j=longitud-1; i < j; i++, j-- ) {
+		tmp = vector[j];
+		vector[j] = vector[i];
+		vector[i] = tmp;
+	}
 }

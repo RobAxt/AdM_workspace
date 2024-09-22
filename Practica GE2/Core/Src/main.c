@@ -97,7 +97,7 @@ int main(void)
 
 	/* ----------- Ejercicio 3 ----------- */
 
-	int32_t vec32_3[] = {-1,-2,-6,-4,-5,-6,-7,-8,-9,-10,-11,-12};
+	int32_t vec32_3[] = {-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12};
 	uint32_t lon32_3 = sizeof(vec32_3)/sizeof(vec32_3[0]);
 	uint32_t N_3 = 3;
 	uint32_t down_lon32_3 = lon32_3 -( lon32_3 / N_3 );
@@ -110,6 +110,11 @@ int main(void)
 	/* ----------- Ejercicio 3 ----------- */
 
 	/* ----------- Ejercicio 4 ----------- */
+	int16_t vec16_4[] = {1,2,3,4,5,6};
+	uint32_t lon32_4 = sizeof(vec16_4)/sizeof(vec16_4[0]);
+
+	invertir(vec16_4, lon32_4);
+	asm_invertir(vec16_4, lon32_4);
 	/* ----------- Ejercicio 4 ----------- */
 
 
