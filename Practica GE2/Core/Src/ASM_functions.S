@@ -48,7 +48,7 @@
 
 /* Ejercicio 2*/
 // Prototipo en archivo .h:
-//uint32_t asm_max (int32_t * vectorIn, uint32_t longitud);
+// uint32_t asm_max (int32_t * vectorIn, uint32_t longitud);
 
 // Parámetros recibidos
 //	r0: vectorIn
@@ -99,7 +99,6 @@
         udiv r4, r2, r3  // división: r4 = longitud / N
         sub  r4, r2, r4  // r4 = longitud - longitud / N ---> longitud vectorOut
 
-
 	_loop3:
         udiv  r6, r2, r3             //  r6 = r2 / r3 (i / N)  |
         mul   r7, r6, r3             //  r7 = r6 * r3 (r6 * N) |  r2 % r3
@@ -148,7 +147,3 @@
 	_exit4:
 		pop {r4 - r7} // Se recuperan los valores de los registros
 		bx lr
-
-
-
-
