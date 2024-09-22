@@ -122,13 +122,28 @@
 
 // Parámetros recibidos
 //	r0: vector
-//	r1: longitud
+//	r1: longitud   ( indice j)
 // Valor de retorno: void
 .thumb_func
 	asm_invertir:
-		push {r4 - r7} // Se resguardan los valores de los registros en el stack
+		push {r4 - r7}  // Se resguardan los valores de los registros en el stack
 		cbz r0, _exit4	// Guarda de seguridad. Salir si vectorIn es una dirección nula
+        cbz r1, _exit4  // Guarda de seguridad. Salir si longitud es cero
 
+		mov r2, #0      // i = 0
+
+	_loop4:
+    	cmp r2, r1                   // Comparar i con j (r2 con r1)
+	    bge _exit4                   // Si i >= j, salir del bucle
+
+		sub r1, #1                   // j--
+    	ldrh r3, [r0, r1, LSL #1]    // r3 = vector[j]
+    	ldrh r4, [r0, r2, LSL #1]    // r4 = vector[i]
+    	strh r4, [r0, r1, LSL #1]    // vector[j] = r4
+    	strh r3, [r0, r2, LSL #1]    // vector[i] = r3
+    	add r2, #1                   // i++
+
+        b _loop4
 
 	_exit4:
 		pop {r4 - r7} // Se recuperan los valores de los registros

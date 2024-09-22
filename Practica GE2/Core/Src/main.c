@@ -87,7 +87,7 @@ int main(void)
 
 	/* ----------- Ejercicio 2 ----------- */
 
-    int32_t vec32_2[] = {5,3,6,10};
+    int32_t vec32_2[] = {-5,-3,6,-10};
     uint32_t lon32_2 = sizeof(vec32_2)/sizeof(vec32_2[0]);
 
     uint32_t rta_2 = max(vec32_2, lon32_2);
@@ -110,7 +110,7 @@ int main(void)
 	/* ----------- Ejercicio 3 ----------- */
 
 	/* ----------- Ejercicio 4 ----------- */
-	int16_t vec16_4[] = {1,2,3,4,5,6};
+	int16_t vec16_4[] = {1000,-2000,3000,-4000,5000,-6000,7000};
 	uint32_t lon32_4 = sizeof(vec16_4)/sizeof(vec16_4[0]);
 
 	invertir(vec16_4, lon32_4);
