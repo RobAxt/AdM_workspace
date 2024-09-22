@@ -26,7 +26,13 @@ uint32_t max (int32_t * vectorIn, uint32_t longitud) {
 
 /* Ejercicio 3 */
 void downSample (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N) {
-
+    uint32_t j = longitud - ( longitud / N );
+	for (uint32_t i = longitud; i > 0; i --) {
+		if(i % N != 0) {
+			vectorOut[j-1] = vectorIn[i-1];
+			j--;
+		}
+	}
 }
 
 /* Ejercicio 4 */

@@ -87,7 +87,7 @@ int main(void)
 
 	/* ----------- Ejercicio 2 ----------- */
 
-    int32_t vec32_2[] = {7,3,1};
+    int32_t vec32_2[] = {-5,-3,-6,-10};
     uint32_t lon32_2 = sizeof(vec32_2)/sizeof(vec32_2[0]);
 
     uint32_t rta_2 = max(vec32_2, lon32_2);
@@ -96,6 +96,17 @@ int main(void)
     /* ----------- Ejercicio 2 ----------- */
 
 	/* ----------- Ejercicio 3 ----------- */
+
+	int32_t vec32_3[] = {1,2,3,4,5,6,7,8,9,10,11,12};
+	uint32_t lon32_3 = sizeof(vec32_3)/sizeof(vec32_3[0]);
+	uint32_t N_3 = 3;
+	uint32_t down_lon32_3 = lon32_3 -( lon32_3 / N_3 );
+	int32_t down_vec32_3[down_lon32_3];
+	int32_t asm_down_vec32_3[down_lon32_3];
+
+	downSample(vec32_3, down_vec32_3, lon32_3, N_3);
+	asm_downSample(vec32_3, asm_down_vec32_3, lon32_3, N_3);
+
 	/* ----------- Ejercicio 3 ----------- */
 
 	/* ----------- Ejercicio 4 ----------- */
