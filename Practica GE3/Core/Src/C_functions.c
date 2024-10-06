@@ -24,7 +24,7 @@ void eco (int16_t * signal, int16_t *eco, uint32_t longitud) {
 	for( uint32_t i=0; i < 882; i++) {
 		eco[i] = signal[i];
 	}
-	for( uint32_t i=0; i < longitud-881; i++){
-		eco[i+882] = signal[i]/2 + signal[i+882];
+	for( uint32_t i=882; i < longitud; i++){
+		eco[i] = signal[i-882]/2 + signal[i];
 	}
 }

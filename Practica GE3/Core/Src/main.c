@@ -126,7 +126,9 @@ int main(void)
 	/* ----------- Ejercicio 3 ----------- */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
     int16_t signal[4096]  = {0};
-    int16_t singal2[4096] = {0};
+    int16_t signal_C[4096] = {0};
+    int16_t signal_ASM[4096] = {0};
+    int16_t signal_DSP[4096] = {0};
     uint32_t longitud3   =  sizeof(signal) / sizeof(signal[0]);
 
     for (uint32_t i=0 ; i < longitud3; i++) {
@@ -134,15 +136,15 @@ int main(void)
     }
 
 	DWT->CYCCNT = 0;
-	eco(signal, singal2, longitud3);
+	eco(signal, signal_C, longitud3);
 	Ciclos_C = DWT->CYCCNT;
 
-	DWT->CYCCNT = 0;
-
+ 	DWT->CYCCNT = 0;
+ 	asm_eco(signal, signal_ASM, longitud3);
 	Ciclos_ASM = DWT->CYCCNT;
 
 	DWT->CYCCNT = 0;
-
+	asm_eco_DSP(signal, signal_DSP, longitud3);
 	Ciclos_DSP = DWT->CYCCNT;
 	/* ----------- Ejercicio 3 ----------- */
 

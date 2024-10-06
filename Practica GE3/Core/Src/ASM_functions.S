@@ -17,6 +17,8 @@
 .global asm_potencia_DSP
 .global asm_medDif
 .global asm_medDif_DSP
+.global asm_eco
+.global asm_eco_DSP
 
 /* Ejercicio 1 */
 //Ciclos_C   = 246
@@ -124,17 +126,74 @@
 		bx lr
 
 
-
-
 /* Ejercicio 3*/
+//Ciclos_C   = 210597
+//Ciclos_ASM =  52970
+//Ciclos_DSP =  24895
 // Prototipo en archivo .h:
-//
+//void asm_eco (int16_t * signal, int16_t *eco, uint32_t longitud);
 
 // Parámetros recibidos
-//	r0: vectorIn
-//	r1: vectorOut
+//	r0: signal
+//	r1: eco
 //  r2: longitud
-//  r3: N
 
 // Valor de retorno: void
+.thumb_func
+	asm_eco:
+		push {r4 - r7}  // Se resguardan los valores de los registros en el stack
+		cbz r0, _exit3	// Guarda de seguridad.
+		cbz r1, _exit3	// Guarda de seguridad.
+		mov r3, #0		// indice
+        mov r4, #882	// workaround xq no andubo cmp r3, #882
+        mov r6, #0      // indice auxiliar
+	_loop3a:
+		ldrsh r5, [r0, r3, LSL #1] // Se carga signal
+	    strh  r5, [r1, r3, LSL #1] // Se guarda en eco
+	    add   r3, #1			   // Aumento indice
+		cmp   r3, r4			   // indice < 882
+		blo   _loop3a              // Si menor, salto, else sigo.
 
+	_loop3b:
+		ldrsh r5, [r0, r3, LSL #1] // Se carga signal
+		ldrsh r7, [r0, r6, LSL #1] // Se carga signal corrido
+		asr   r7, r7, #1		   // se divide por 2 eco
+		add   r5, r7
+		strh  r5, [r1, r3, LSL #1] // Se guarda en eco
+		add   r6, #1
+		add   r3, #1
+		cmp   r3, r2
+		blo   _loop3b
+
+	_exit3:
+		pop {r4 - r7} // Se recuperan los valores de los registros
+		bx lr
+
+.thumb_func
+	asm_eco_DSP:
+		push {r4 - r7}  // Se resguardan los valores de los registros en el stack
+		cbz r0, _exit3_dsp	// Guarda de seguridad.
+		cbz r1, _exit3_dsp	// Guarda de seguridad.
+		mov r3, #0		// indice
+        mov r4, #882	// workaround xq no andubo cmp r3, #882
+        mov r6, #0      // indice auxiliar
+	_loop3_dsp_a:
+		ldr r5, [r0, r3, LSL #1] // Se carga signal
+	    str r5, [r1, r3, LSL #1] // Se guarda en eco
+	    add   r3, #2			   // Aumento indice
+		cmp   r3, r4			   // indice < 882
+		blo   _loop3_dsp_a              // Si menor, salto, else sigo.
+
+	_loop3_dsp_b:
+		ldr r5, [r0, r3, LSL #1] // Se carga signal
+		ldr r7, [r0, r6, LSL #1] // Se carga signal corrido
+		sxtab16 r5,r5,r7,ROR #1
+		str  r5, [r1, r3, LSL #1] // Se guarda en eco
+		add   r6, #2
+		add   r3, #2
+		cmp   r3, r2
+		blo   _loop3_dsp_b
+
+	_exit3_dsp:
+		pop {r4 - r7} // Se recuperan los valores de los registros
+		bx lr
