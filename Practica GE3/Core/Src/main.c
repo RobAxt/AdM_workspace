@@ -100,8 +100,25 @@ int main(void)
 
 	/* ----------- Ejercicio 2 ----------- */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+    int8_t x [] = { 2,2,2,2,4,4,4,4 };
+    int8_t y [] = { 4,4,4,4,2,2,2,2 };
+    int8_t e [] = { 0,0,0,0,0,0,0,0 };
+	uint16_t longitud2 = sizeof(x) / sizeof(x[0]);
+	uint32_t rta2_C = 0, rta2_ASM = 0, rta2_DSP = 0;
+	Ciclos_C = Ciclos_ASM = Ciclos_DSP = 0;
 
-    uint32_t Ciclos_asm = DWT->CYCCNT;
+	DWT->CYCCNT = 0;
+	//medDif(e, x, y, longitud2);
+	Ciclos_C = DWT->CYCCNT;
+
+	DWT->CYCCNT = 0;
+	asm_medDif(e, x, y, longitud2);
+	Ciclos_ASM = DWT->CYCCNT;
+
+	DWT->CYCCNT = 0;
+	asm_medDif_DSP(e, x, y, longitud2);
+	Ciclos_DSP = DWT->CYCCNT;
+
 	/* ----------- Ejercicio 2 ----------- */
 
 	/* ----------- Ejercicio 3 ----------- */
