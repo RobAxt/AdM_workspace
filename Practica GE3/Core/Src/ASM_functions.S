@@ -129,7 +129,7 @@
 /* Ejercicio 3*/
 //Ciclos_C   = 210597
 //Ciclos_ASM =  52970
-//Ciclos_DSP =  24895
+//Ciclos_DSP =  24456
 // Prototipo en archivo .h:
 //void asm_eco (int16_t * signal, int16_t *eco, uint32_t longitud);
 
@@ -171,23 +171,25 @@
 
 .thumb_func
 	asm_eco_DSP:
-		push {r4 - r7}  // Se resguardan los valores de los registros en el stack
+		push {r4 - r8}  // Se resguardan los valores de los registros en el stack
 		cbz r0, _exit3_dsp	// Guarda de seguridad.
 		cbz r1, _exit3_dsp	// Guarda de seguridad.
 		mov r3, #0		// indice
         mov r4, #882	// workaround xq no andubo cmp r3, #882
         mov r6, #0      // indice auxiliar
+        mov r8, #0      // auxiliar nulo
 	_loop3_dsp_a:
 		ldr r5, [r0, r3, LSL #1] // Se carga signal
 	    str r5, [r1, r3, LSL #1] // Se guarda en eco
-	    add   r3, #2			   // Aumento indice
-		cmp   r3, r4			   // indice < 882
-		blo   _loop3_dsp_a              // Si menor, salto, else sigo.
+	    add   r3, #2			 // Aumento indice
+		cmp   r3, r4			 // indice < 882
+		blo   _loop3_dsp_a       // Si menor, salto, else sigo.
 
 	_loop3_dsp_b:
-		ldr r5, [r0, r3, LSL #1] // Se carga signal
-		ldr r7, [r0, r6, LSL #1] // Se carga signal corrido
-		sxtab16 r5,r5,r7,ROR #1
+		ldr r5, [r0, r3, LSL #1]  // Se carga signal
+		ldr r7, [r0, r6, LSL #1]  // Se carga signal corrido
+        shadd16 r7, r7, r8        // tmp = ( signal[i-882] + 0 ) / 2
+        sadd16 r5, r5, r7         // tmp + signal[i]
 		str  r5, [r1, r3, LSL #1] // Se guarda en eco
 		add   r6, #2
 		add   r3, #2
@@ -195,5 +197,5 @@
 		blo   _loop3_dsp_b
 
 	_exit3_dsp:
-		pop {r4 - r7} // Se recuperan los valores de los registros
+		pop {r4 - r8} // Se recuperan los valores de los registros
 		bx lr
