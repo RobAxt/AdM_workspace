@@ -21,11 +21,10 @@ void medDif(int8_t * e, int8_t *x, int8_t *y, uint16_t longitud) {
 
 /* Ejercicio 3 */
 void eco (int16_t * signal, int16_t *eco, uint32_t longitud) {
-	for( uint8_t i=0; i < 882; i++) {
+	for( uint32_t i=0; i < 882; i++) {
 		eco[i] = signal[i];
 	}
-	for( uint8_t i=0; i <= longitud; i++){
+	for( uint32_t i=0; i < longitud-881; i++){
 		eco[i+882] = signal[i]/2 + signal[i+882];
 	}
-
 }

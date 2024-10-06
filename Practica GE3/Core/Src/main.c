@@ -81,7 +81,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
 	/* ----------- Ejercicio 1 ----------- */
-	int16_t  vecIn[] = {2, -2};
+	int16_t  vecIn[] = {2, -2, -4, 4};
 	uint32_t longitud = sizeof(vecIn) / sizeof(vecIn[0]);
 	uint32_t rta1_C = 0, rta1_ASM = 0, rta1_DSP = 0;
 
@@ -100,31 +100,50 @@ int main(void)
 
 	/* ----------- Ejercicio 2 ----------- */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
-    int8_t x [] = { 2,2,2,2,4,4,4,4 };
-    int8_t y [] = { 4,4,4,4,2,2,2,2 };
-    int8_t e [] = { 0,0,0,0,0,0,0,0 };
+    int8_t x [] = { 4,4,4,4,8,8,8,8 };
+    int8_t y [] = { 8,8,8,8,4,4,4,4 };
+    int8_t e1 [] = { 0,0,0,0,0,0,0,0 };
+    int8_t e2 [] = { 0,0,0,0,0,0,0,0 };
+    int8_t e3 [] = { 0,0,0,0,0,0,0,0 };
 	uint16_t longitud2 = sizeof(x) / sizeof(x[0]);
 	uint32_t rta2_C = 0, rta2_ASM = 0, rta2_DSP = 0;
 	Ciclos_C = Ciclos_ASM = Ciclos_DSP = 0;
 
 	DWT->CYCCNT = 0;
-	//medDif(e, x, y, longitud2);
+	medDif(e1, x, y, longitud2);
 	Ciclos_C = DWT->CYCCNT;
 
 	DWT->CYCCNT = 0;
-	asm_medDif(e, x, y, longitud2);
+	asm_medDif(e2, x, y, longitud2);
 	Ciclos_ASM = DWT->CYCCNT;
 
 	DWT->CYCCNT = 0;
-	asm_medDif_DSP(e, x, y, longitud2);
+	asm_medDif_DSP(e3, x, y, longitud2);
 	Ciclos_DSP = DWT->CYCCNT;
 
 	/* ----------- Ejercicio 2 ----------- */
 
 	/* ----------- Ejercicio 3 ----------- */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+    int16_t signal[4096]  = {0};
+    int16_t singal2[4096] = {0};
+    uint32_t longitud3   =  sizeof(signal) / sizeof(signal[0]);
 
-    uint32_t Ciclos_dsp = DWT->CYCCNT;
+    for (uint32_t i=0 ; i < longitud3; i++) {
+    	signal[i]= 10;
+    }
+
+	DWT->CYCCNT = 0;
+	eco(signal, singal2, longitud3);
+	Ciclos_C = DWT->CYCCNT;
+
+	DWT->CYCCNT = 0;
+
+	Ciclos_ASM = DWT->CYCCNT;
+
+	DWT->CYCCNT = 0;
+
+	Ciclos_DSP = DWT->CYCCNT;
 	/* ----------- Ejercicio 3 ----------- */
 
   /* USER CODE END 1 */
